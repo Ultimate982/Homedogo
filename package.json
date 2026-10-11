@@ -1,0 +1,1 @@
+{"name":"home-dojo","version":"1.0.0","description":"Family merit, chore and rewards tracker","main":"server.js","scripts":{"start":"node server.js"},"engines":{"node":">=22.13"},"license":"UNLICENSED","private":true}

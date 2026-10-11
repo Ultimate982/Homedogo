@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Home Dojo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#fff6ec;--card:#fffdf9;--tx:#4a3a33;--mut:#9a8378;--pri:#ff8a5c;--good:#4fb286;--bad:#e8718d;--bd:#f3dfcc;--sun:#ffc857}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2a211d;--card:#362a25;--tx:#fbeee3;--mut:#c4a999;--bd:#4d3b33}}
+:root[data-theme="dark"]{--bg:#2a211d;--card:#362a25;--tx:#fbeee3;--mut:#c4a999;--bd:#4d3b33}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Nunito,ui-rounded,system-ui,sans-serif}
+main{max-width:780px;margin:0 auto;padding:16px}
+h1{font-size:26px;margin:4px 0}h2{font-size:17px;margin:18px 0 6px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.card{background:var(--card);border:2px solid var(--bd);border-radius:22px;padding:14px;box-shadow:0 4px 0 var(--bd)}
+.kid{cursor:pointer;text-align:center}.av{font-size:48px}.nm{font-weight:800;font-size:19px}.mut{color:var(--mut);font-size:14px}
+.bar{height:12px;background:var(--bd);border-radius:8px;overflow:hidden;margin:8px 0 4px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--pri),var(--sun))}
+button{font:inherit;font-weight:700;border:0;border-radius:14px;padding:9px 13px;cursor:pointer;background:var(--pri);color:#fff}
+button.g{background:var(--good)}button.b{background:var(--bad)}button.o{background:transparent;color:var(--mut);border:2px solid var(--bd)}button.chip{font-size:13px;padding:6px 10px;border-radius:12px;font-weight:600}button:disabled{opacity:.4;cursor:default}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;align-items:center}
+input,select{font:inherit;padding:9px;border-radius:12px;border:2px solid var(--bd);background:var(--card);color:var(--tx);min-width:0}
+.badge{background:var(--card);border:2px solid var(--bd);border-radius:14px;padding:6px 10px;font-size:13px}.badge.off{opacity:.3;filter:grayscale(1)}
+.li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px dashed var(--bd)}
+.pos{color:var(--good);font-weight:800}.neg{color:var(--bad);font-weight:800}
+.tabs{display:flex;gap:6px;margin:12px 0;flex-wrap:wrap}.tabs button{background:var(--card);color:var(--tx);border:2px solid var(--bd)}.tabs button.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+</style></head><body><main id="app"><p>Loading your family space… 🏡</p></main>
+<script>
+var MER=[
+["🧹","Did chores",2,"chore"],["🛏️","Made bed",1,"chore"],["🧺","Put laundry away",2,"chore"],["🍽️","Cleared the table",1,"chore"],["🫧","Washed dishes",2,"chore"],["🗑️","Took out the trash",2,"chore"],["🐶","Fed/walked the pet",2,"chore"],["🧸","Tidied toys",2,"chore"],["🧼","Cleaned bathroom",3,"chore"],["🍳","Helped cook",3,"chore"],["🛒","Helped with shopping",2,"chore"],["🪴","Watered plants",1,"chore"],["🚗","Helped unpack/carry",1,"chore"],
+["📚","Homework done",2,"school"],["📖","Read for 20 min",2,"school"],["✏️","Practised writing/maths",2,"school"],["🎒","Packed school bag",1,"school"],["🌟","Great school report",5,"school"],["🎹","Practised instrument",2,"school"],["🔬","Learned something new",2,"school"],["❓","Asked a great question",1,"school"],
+["💛","Showed kindness",3,"kind"],["🤝","Helped someone",3,"kind"],["🧸","Shared with sibling/friend",2,"kind"],["🫂","Comforted someone",3,"kind"],["🙏","Said please & thank you",1,"kind"],["💌","Made a card/gift",3,"kind"],["🌍","Helped a neighbour",3,"kind"],["😊","Included someone left out",3,"kind"],["🕊️","Said sorry & meant it",2,"kind"],["🎁","Was generous",3,"kind"],
+["👂","Good listening",1,"behave"],["⏰","Followed instructions first time",2,"behave"],["🗣️","Used kind words",1,"behave"],["🧘","Stayed calm when upset",3,"behave"],["🍴","Great table manners",1,"behave"],["🚶","Waited patiently",1,"behave"],["🏆","Good sportsmanship",2,"behave"],["🤫","Quiet time well done",1,"behave"],["🙋","Told the truth (even when hard)",3,"behave"],["🚗","Behaved well out & about",2,"behave"],
+["🪥","Brushed teeth",1,"health"],["🛁","Bath/shower without fuss",1,"health"],["🥦","Tried new food",2,"health"],["🏃","Active play / exercise",2,"health"],["😴","Bedtime on time",2,"health"],["💧","Drank enough water",1,"health"],["🍎","Ate healthy snack",1,"health"],["👕","Got dressed on their own",1,"health"],
+["🌱","Showed responsibility",3,"growth"],["💪","Tried something hard",3,"growth"],["🎨","Creative project",2,"growth"],["📵","Screen-free time",2,"growth"],["💰","Saved pocket money",2,"growth"],["🌈","Great attitude",2,"growth"],["🚀","Reached a personal goal",5,"growth"],["🔁","Kept trying after a mistake",2,"growth"],["🎉","Birthday/special effort bonus",5,"growth"]];
+var DEM=[
+["😤","Talking back",-2,"a"],["🙉","Not listening",-1,"a"],["😠","Rude words/tone",-2,"a"],["🤬","Bad language",-3,"a"],["😡","Tantrum",-2,"a"],["🙄","Eye-rolling/attitude",-1,"a"],["😒","Complaining a lot",-1,"a"],["🚪","Slammed doors",-1,"a"],["🧏","Ignored a request",-2,"a"],
+["🙈","Skipped chores",-2,"h"],["🧦","Left mess around",-1,"h"],["🧸","Toys left out",-1,"h"],["🍫","Ate without asking",-1,"h"],["🖍️","Drew on walls/furniture",-3,"h"],["💥","Broke something by being careless",-2,"h"],["🛏️","Didn't make bed",-1,"h"],["🎒","Forgot homework/bag",-1,"h"],["👟","Shoes/clothes on floor",-1,"h"],
+["👊","Fighting / hitting",-3,"s"],["🤥","Lying",-3,"s"],["😈","Teasing/bullying",-3,"s"],["🧸","Wouldn't share",-1,"s"],["📢","Shouting at sibling",-2,"s"],["🚫","Took things without asking",-2,"s"],["🤐","Left someone out",-2,"s"],["🏃","Ran off / didn't stay close",-3,"s"],
+["📱","Broke screen rule",-1,"d"],["⏰","Out of bed after lights out",-1,"d"],["🛑","Wouldn't stop when asked",-2,"d"],["🍬","Sneaked sweets/screen time",-2,"d"],["🪥","Skipped brushing teeth",-1,"d"],["⏳","Late for school/bed",-1,"d"],["🐢","Dawdled / took too long",-1,"d"],["📺","Too much screen time",-2,"d"]];
+var GL={chore:"🏠 Chores & home",school:"📚 School & learning",kind:"💛 Kindness",behave:"🌟 Behaviour & manners",health:"💪 Health & self-care",growth:"🌱 Growth & responsibility",a:"😤 Attitude & words",h:"🏠 Home & responsibility",s:"👊 Behaviour with others",d:"📱 Rules, routines & screens"};
+function grp(L,cls,pos){var o={},h="",i;L.forEach(function(m){(o[m[3]]=o[m[3]]||[]).push(m)});for(i in o){h+="<div class='mut' style='margin-top:10px;font-weight:700'>"+GL[i]+"</div><div class='row'>";o[i].forEach(function(m){h+="<button class='"+cls+" chip' data-a='give' data-p='"+m[2]+"' data-w='"+m[1].replace(/'/g,"&#39;")+"' data-c='"+(pos?m[3]:"")+"'>"+m[0]+" "+m[1]+" "+(pos?"+":"")+m[2]+"</button>"});h+="</div>"}return h}
+var BAD=[["🌟","First star",function(c){return c.n>=1}],["🧽","Chore Champ",function(c){return c.chore>=5}],["💖","Kind Heart",function(c){return c.kind>=5}],["🎓","Scholar",function(c){return c.school>=5}],["🏅","25 pts",function(c){return c.t>=25}],["🏆","50 pts",function(c){return c.t>=50}],["👑","100 pts",function(c){return c.t>=100}]];
+var db,canWrite=true,D={kids:[],chores:[],rewards:[],events:[],done:[],wins:[]},V={mode:"parent",sel:null,tab:"kids",wk:0,auth:"login"};
+try{V.mode=localStorage.getItem("hd_mode")||"parent"}catch(e){}
+function dat(d){var x=typeof d.data==="function"?d.data():d.data;x=Object.assign({},x);x.id=d.id||(d.ref&&d.ref.id);return x}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function pk(f){var d=new Date();if(f==="once")return"once";if(f==="weekly"){d.setDate(d.getDate()-((d.getDay()+6)%7))}return d.toISOString().slice(0,10).replace(/-/g,"")+(f==="weekly"?"w":"")}
+function ev(k){return D.events.filter(function(e){return e.kid===k})}
+function tot(k){return ev(k).reduce(function(a,e){return a+e.p},0)}
+function cn(k){var c={n:0,chore:0,kind:0,school:0,t:Math.max(0,tot(k))};ev(k).forEach(function(e){if(e.p>0){c.n++;if(c[e.c]!==undefined)c[e.c]++}});return c}
+function lvl(k){var t=Math.max(0,tot(k));return{l:Math.floor(t/20)+1,pct:(t%20)*5,left:20-t%20}}
+function give(k,p,w,c){return db.collection("events").add({kid:k,p:p,w:w,c:c||"",t:Date.now()})}
+var WINS=[["🚴","Learned to ride a bike",10],["📕","Finished a whole book",5],["🌟","Perfect week of chores",8],["🎓","Awesome school achievement",8],["🥇","Won or placed in a competition",8],["🦸","Did something really brave",6],["💞","Went above and beyond for someone",6],["🧠","Mastered a new skill",5],["🎤","Showed off their talent",5],["🌈","Overcame a fear",8]];
+function wkLabel(k){var d=new Date(k.slice(0,4)+"-"+k.slice(4,6)+"-"+k.slice(6,8)+"T12:00:00");return "Week of "+d.toLocaleDateString(undefined,{month:"short",day:"numeric"})}
+function addWin(k,em,t,b){return db.collection("wins").add({kid:k,em:em,title:t,bonus:b,t:Date.now(),wk:pk("weekly")}).then(function(){return b>0?give(k,b,"🏆 "+t,"win"):0})}
+function winLine(w,P){return "<div class='li'><span>"+esc(w.em)+" <b>"+esc(w.title)+"</b>"+(w.bonus?" <span class='pos'>+"+w.bonus+" ⭐</span>":"")+" <span class='mut'>"+new Date(w.t).toLocaleDateString()+"</span></span>"+(P&&canWrite?"<button class='o' data-a='delwin' data-v='"+w.id+"'>🗑</button>":"")+"</div>"}
+function wins(k,P){var all=D.wins.filter(function(w){return w.kid===k.id}).sort(function(a,b){return b.t-a.t}),cur=pk("weekly"),th=all.filter(function(w){return w.wk===cur}),old=all.filter(function(w){return w.wk!==cur}),h="<h2>🏆 This week's achievements <span class='mut'>("+wkLabel(cur)+")</span></h2><div class='card'>";
+th.forEach(function(w){h+=winLine(w,P)});if(!th.length)h+="<span class='mut'>A fresh new week — what amazing thing will happen? ✨</span>";
+if(P&&canWrite){h+="<div class='mut' style='margin-top:10px;font-weight:700'>Add an achievement</div><div class='row'>";WINS.forEach(function(w,i){h+="<button class='g chip' data-a='win' data-i='"+i+"'>"+w[0]+" "+w[1]+" +"+w[2]+"</button>"});
+h+="</div><div class='row'><input id='wem' placeholder='🏆' size='3'><input id='wt' placeholder='Something really great they did' style='flex:1'><input id='wb' type='number' min='0' value='5' style='width:64px' title='Bonus stars'><button data-a='addwin'>Add 🏆</button></div>"}
+h+="</div>";
+if(old.length){var by={},ks=[];old.forEach(function(w){if(!by[w.wk]){by[w.wk]=[];ks.push(w.wk)}by[w.wk].push(w)});h+="<h2>🗂️ Past weeks</h2><div class='card'>";ks.sort().reverse().forEach(function(x){h+="<div class='mut' style='font-weight:700;margin-top:6px'>"+wkLabel(x)+"</div>";by[x].forEach(function(w){h+=winLine(w,P)})});h+="</div>"}
+return h}
+function kidOf(id){return D.kids.filter(function(k){return k.id===id})[0]}
+function todays(k){return D.chores.filter(function(c){return !c.kids||!c.kids.length||c.kids.indexOf(k.id)>-1}).map(function(c){var id=c.id+"_"+k.id+"_"+pk(c.freq);var d=D.done.filter(function(x){return x.id===id})[0];return{c:c,id:id,st:d?d.st:""}})}
+function render(){
+var h="",top="<div class='top'><h1>🏡 Home Dojo</h1><button class='o' data-a='mode'>"+(V.mode==="parent"?"🧒 Switch to kid view":"👨‍👩‍👧 Parent mode")+"</button></div>";
+if(!ME){document.getElementById("app").innerHTML=authScreen();return}
+var P=V.mode==="parent",k=V.sel&&kidOf(V.sel);
+top+="<div class='mut'>"+esc(ME.fname)+" · "+esc(ME.name)+(P?" · Invite code: <b>"+esc(ME.code)+"</b>":"")+" · <a href='#' data-a='logout' style='color:inherit'>Sign out</a></div>";
+if(!canWrite)top+="<p class='mut'>👀 You can look around, but only family members invited as Contributors can make changes.</p>";
+if(!k){
+h+="<div class='tabs'>";
+if(P)[["kids","👧 Kids"],["chores","🧹 Chores"],["rewards","🎁 Rewards"],["weekly","📅 Weekly"]].forEach(function(t){h+="<button class='"+(V.tab===t[0]?"on":"")+"' data-a='tab' data-v='"+t[0]+"'>"+t[1]+"</button>"});
+h+="</div>";
+var pend=D.done.filter(function(x){return x.st==="pending"});
+if(P&&V.tab==="kids"&&pend.length){h+="<h2>⏳ Waiting for your thumbs-up</h2><div class='card'>";pend.forEach(function(x){var kd=kidOf(x.kid),ch=D.chores.filter(function(c){return c.id===x.chore})[0];if(!kd||!ch)return;h+="<div class='li'><span>"+esc(kd.av)+" "+esc(kd.name)+" did <b>"+esc(ch.title)+"</b> (+"+ch.pts+")</span><span><button class='g' data-a='ok' data-v='"+x.id+"'>✓</button> <button class='o' data-a='no' data-v='"+x.id+"'>✗</button></span></div>"});h+="</div>"}
+if(!P||V.tab==="kids"){
+h+="<h2>"+(P?"Our kids":"Who's playing today?")+"</h2><div class='grid'>";
+D.kids.forEach(function(x){var v=lvl(x.id);h+="<div class='card kid' data-a='open' data-v='"+x.id+"'><div class='av'>"+esc(x.av)+"</div><div class='nm'>"+esc(x.name)+"</div><div class='bar'><i style='width:"+v.pct+"%'></i></div><div class='mut'>Level "+v.l+" · "+Math.max(0,tot(x.id))+" ⭐"+(function(){var n=D.wins.filter(function(w){return w.kid===x.id&&w.wk===pk("weekly")}).length;return n?" · 🏆 "+n:""})()+"</div></div>"});
+h+="</div>";
+if(!D.kids.length)h+="<p class='mut'>No kids yet — add your first little one below! 🌱</p>";
+if(P&&canWrite)h+="<div class='card' style='margin-top:14px'><b>Add a child</b><div class='row'><input id='ka' placeholder='😀' size='3'><input id='kn' placeholder='Name' style='flex:1'><button data-a='addkid'>Add</button></div></div>"}
+if(P&&V.tab==="chores"){h+="<h2>Chore chart</h2><div class='card'>";
+D.chores.forEach(function(c){h+="<div class='li'><span><b>"+esc(c.title)+"</b> · +"+c.pts+" ⭐ · "+c.freq+"<br><span class='mut'>"+((c.kids&&c.kids.length)?c.kids.map(function(i){var x=kidOf(i);return x?esc(x.name):""}).join(", "):"Everyone")+"</span></span><button class='o' data-a='delchore' data-v='"+c.id+"'>🗑</button></div>"});
+if(!D.chores.length)h+="<span class='mut'>No chores yet.</span>";h+="</div>";
+if(canWrite){h+="<div class='card' style='margin-top:12px'><b>New chore</b><div class='row'><input id='ct' placeholder='e.g. Feed the dog' style='flex:1'><input id='cp' type='number' min='1' value='2' style='width:64px'><select id='cf'><option value='daily'>Daily</option><option value='weekly'>Weekly</option><option value='once'>Once</option></select></div><div class='row mut'>For:";D.kids.forEach(function(x){h+=" <label><input type='checkbox' class='ck' value='"+x.id+"'> "+esc(x.name)+"</label>"});h+="</div><div class='mut'>Leave all unticked for everyone.</div><div class='row'><button data-a='addchore'>Add chore</button></div></div>"}}
+if(P&&V.tab==="rewards"){h+="<h2>Rewards shop</h2><div class='card'>";
+D.rewards.forEach(function(r){h+="<div class='li'><span>"+esc(r.em)+" <b>"+esc(r.title)+"</b> · "+r.cost+" ⭐</span><button class='o' data-a='delrew' data-v='"+r.id+"'>🗑</button></div>"});
+if(!D.rewards.length)h+="<span class='mut'>Nothing here yet — add a treat to work towards!</span>";h+="</div>";
+if(canWrite)h+="<div class='card' style='margin-top:12px'><b>New reward</b><div class='row'><input id='re' placeholder='🍦' size='3'><input id='rt' placeholder='30 min extra screen time' style='flex:1'><input id='rc' type='number' min='1' value='20' style='width:70px'><button data-a='addrew'>Add</button></div></div>"}
+if(P&&V.tab==="weekly")h+=weeklyAll();
+}else{
+var v=lvl(k.id),t=Math.max(0,tot(k.id));
+h+="<div class='top'><button class='o' data-a='back'>← Back</button>"+(P&&canWrite?"<button class='o' data-a='delkid'>Remove</button>":"")+"</div>";
+h+="<div class='card' style='text-align:center;margin-top:10px'><div class='av'>"+esc(k.av)+"</div><div class='nm'>Hi "+esc(k.name)+"! 🌈</div><div class='bar'><i style='width:"+v.pct+"%'></i></div><div class='mut'>Level "+v.l+" · "+t+" ⭐ · "+v.left+" to next level</div></div>";
+h+="<h2>🧹 Today's chores</h2><div class='card'>";
+var td=todays(k);td.forEach(function(x){var lab=x.st==="approved"?"<span class='pos'>Done! 🎉</span>":x.st==="pending"?"<span class='mut'>Waiting for a parent ⏳</span>":(canWrite?"<button class='g' data-a='did' data-v='"+x.c.id+"'>"+(P?"Done ✓":"I did it!")+"</button>":"");h+="<div class='li'><span>"+esc(x.c.title)+" <span class='mut'>+"+x.c.pts+"</span></span>"+lab+"</div>"});
+if(!td.length)h+="<span class='mut'>No chores today — enjoy! ☀️</span>";h+="</div>";
+h+="<h2>🎁 Rewards shop</h2><div class='card'>";
+D.rewards.forEach(function(r){h+="<div class='li'><span>"+esc(r.em)+" "+esc(r.title)+" <span class='mut'>"+r.cost+" ⭐</span></span><button "+(t>=r.cost&&canWrite?"":"disabled")+" data-a='buy' data-v='"+r.id+"'>Get it</button></div>"});
+if(!D.rewards.length)h+="<span class='mut'>No rewards yet.</span>";h+="</div>";
+if(P&&canWrite){h+="<h2>⭐ Give a merit</h2>"+grp(MER,"g",1)+"<h2>💭 Give a demerit</h2>"+grp(DEM,"b",0)+"<h2>✍️ Something else</h2><div class='row'><input id='cw' placeholder='Something else…' style='flex:1'><input id='cn' type='number' min='1' value='1' style='width:64px'><button class='g' data-a='cust' data-v='1'>+</button><button class='b' data-a='cust' data-v='-1'>−</button></div>"}
+h+="<h2>🏅 Achievements</h2><div class='row'>";var c=cn(k.id);BAD.forEach(function(b){h+="<span class='badge"+(b[2](c)?"":" off")+"'>"+b[0]+" "+b[1]+"</span>"});
+h+="</div>"+weeklyKid(k)+wins(k,P)+"<h2>Recent</h2><div class='card'>";var es=ev(k.id).sort(function(a,b){return b.t-a.t}).slice(0,12);
+es.forEach(function(e){h+="<div class='li'><span>"+esc(e.w)+" <span class='mut'>"+new Date(e.t).toLocaleDateString()+"</span></span><span class='"+(e.p>0?"pos":"neg")+"'>"+(e.p>0?"+":"")+e.p+"</span></div>"});
+if(!es.length)h+="<span class='mut'>Nothing yet — the first star is waiting! ⭐</span>";h+="</div>"}
+document.getElementById("app").innerHTML=top+h}
+document.addEventListener("click",function(e){var el=e.target.closest("[data-a]");if(!el||!db)return;var a=el.dataset.a,v=el.dataset.v,k=V.sel;
+function go(p){Promise.resolve(p).catch(function(x){console.error(x)})}
+if(a==="mode"){V.mode=V.mode==="parent"?"kid":"parent";V.sel=null;try{localStorage.setItem("hd_mode",V.mode)}catch(x){}}
+else if(a==="tab"){V.tab=v}else if(a==="wk"){V.wk=parseInt(v)}else if(a==="open"){V.sel=v}else if(a==="back"){V.sel=null}
+else if(a==="addkid"){var n=document.getElementById("kn").value.trim();if(n)go(db.collection("kids").add({name:n,av:document.getElementById("ka").value.trim()||"🙂"}))}
+else if(a==="delkid"){if(confirm("Remove this child?")){go(db.doc("kids/"+k).delete());V.sel=null}}
+else if(a==="addchore"){var t=document.getElementById("ct").value.trim();if(t)go(db.collection("chores").add({title:t,pts:parseInt(document.getElementById("cp").value)||1,freq:document.getElementById("cf").value,kids:[].slice.call(document.querySelectorAll(".ck:checked")).map(function(i){return i.value})}))}
+else if(a==="delchore"){go(db.doc("chores/"+v).delete())}
+else if(a==="addrew"){var r=document.getElementById("rt").value.trim();if(r)go(db.collection("rewards").add({title:r,em:document.getElementById("re").value.trim()||"🎁",cost:parseInt(document.getElementById("rc").value)||1}))}
+else if(a==="delrew"){go(db.doc("rewards/"+v).delete())}
+else if(a==="did"){var x=todays(kidOf(k)).filter(function(y){return y.c.id===v})[0];if(x&&!x.st){if(V.mode==="parent"){go(db.doc("done/"+x.id).set({st:"approved",chore:v,kid:k}).then(function(){return give(k,x.c.pts,x.c.title,"chore")}))}else go(db.doc("done/"+x.id).set({st:"pending",chore:v,kid:k}))}}
+else if(a==="ok"){var d=D.done.filter(function(y){return y.id===v})[0],ch=d&&D.chores.filter(function(c){return c.id===d.chore})[0];if(ch)go(db.doc("done/"+v).update({st:"approved"}).then(function(){return give(d.kid,ch.pts,ch.title,"chore")}))}
+else if(a==="no"){go(db.doc("done/"+v).delete())}
+else if(a==="buy"){var rw=D.rewards.filter(function(y){return y.id===v})[0];if(rw&&tot(k)>=rw.cost&&confirm("Get "+rw.title+" for "+rw.cost+" stars?"))go(give(k,-rw.cost,"🎁 "+rw.title,"reward"))}
+else if(a==="win"){var W=WINS[parseInt(el.dataset.i)];if(W&&confirm("Add '"+W[1]+"' (+"+W[2]+" stars)?"))go(addWin(k,W[0],W[1],W[2]))}
+else if(a==="addwin"){var wt=document.getElementById("wt").value.trim();if(wt)go(addWin(k,document.getElementById("wem").value.trim()||"🏆",wt,Math.max(0,parseInt(document.getElementById("wb").value)||0)))}
+else if(a==="delwin"){go(db.doc("wins/"+v).delete())}
+else if(a==="give"){go(give(k,parseInt(el.dataset.p),el.dataset.w,el.dataset.c))}
+else if(a==="cust"){var w=document.getElementById("cw").value.trim();if(w)go(give(k,parseInt(v)*Math.abs(parseInt(document.getElementById("cn").value)||1),w))}
+render()});
+var ME=null,LAST="";
+function api(m,u,b){return fetch(u,{method:m,credentials:"same-origin",headers:{"Content-Type":"application/json"},body:b?JSON.stringify(b):undefined}).then(function(r){return r.json().then(function(j){if(!r.ok)throw j;return j})})}
+function poll(force){if(!ME)return Promise.resolve();return api("GET","/api/all").then(function(a){var x=JSON.stringify(a);if(x===LAST&&!force)return;LAST=x;for(var c in a)D[c]=a[c];var ae=document.activeElement;if(force||!ae||!/INPUT|SELECT|TEXTAREA/.test(ae.tagName))render()}).catch(function(e){if(e&&e.e==="auth"){ME=null;db=null;render()}})}
+function mkdb(){return{collection:function(c){return{add:function(d){return api("POST","/api/c/"+c,d).then(function(){return poll(true)})}}},doc:function(p){var a=p.split("/"),u="/api/c/"+a[0]+"/"+a[1];function w(m,d){return api(m,u,d).then(function(){return poll(true)})}return{set:function(d){return w("PUT",d)},update:function(d){return w("PATCH",d)},delete:function(){return w("DELETE")}}}}}
+function start(u){ME=u;db=mkdb();LAST="";poll(true)}
+function authScreen(){var m=V.auth,t="";[["login","Sign in"],["new","Create a family"],["join","Join with a code"]].forEach(function(x){t+="<button class='"+(m===x[0]?"on":"")+"' data-a='am' data-v='"+x[0]+"'>"+x[1]+"</button>"});
+return "<div class='top'><h1>🏡 Home Dojo</h1></div><p class='mut'>Cheer on your kids, one star at a time. 💛</p><div class='card' style='max-width:440px;margin:18px auto'><div class='tabs'>"+t+"</div><div class='row' style='flex-direction:column;align-items:stretch'>"+(m!=="login"?"<input id='an' placeholder='Your name'>":"")+(m==="new"?"<input id='af' placeholder='Family name (e.g. The Okafors)'>":"")+(m==="join"?"<input id='ac' placeholder='Invite code from your partner'>":"")+"<input id='ae' type='email' placeholder='Email'><input id='ap' type='password' placeholder='Password (8+ characters)'><button data-a='auth'>"+(m==="login"?"Sign in":m==="new"?"Create my family 🏡":"Join family 💛")+"</button><div id='aerr' class='neg'></div></div></div>"}
+document.addEventListener("click",function(e){var el=e.target.closest("[data-a]");if(!el)return;var a=el.dataset.a;
+if(a==="logout"){e.preventDefault();api("POST","/api/logout").then(function(){ME=null;db=null;D={kids:[],chores:[],rewards:[],events:[],done:[],wins:[]};V.sel=null;render()})}
+else if(a==="am"){V.auth=el.dataset.v;render()}
+else if(a==="auth"){var g=function(i){var x=document.getElementById(i);return x?x.value.trim():""};api("POST",V.auth==="login"?"/api/login":"/api/register",{mode:V.auth,name:g("an"),family:g("af"),code:g("ac"),email:g("ae"),password:document.getElementById("ap").value}).then(start).catch(function(x){document.getElementById("aerr").textContent=(x&&x.e)||"Something went wrong"})}});
+document.addEventListener("keydown",function(e){if(e.key==="Enter"&&!ME&&/INPUT/.test(e.target.tagName)){var b=document.querySelector("[data-a=auth]");if(b)b.click()}});
+function wkR(o){var a=new Date();a.setHours(0,0,0,0);a.setDate(a.getDate()-((a.getDay()+6)%7)-7*o);var b=new Date(a);b.setDate(b.getDate()+7);return[a.getTime(),b.getTime()]}
+function wsum(id,o){var r=wkR(o),es=ev(id).filter(function(e){return e.t>=r[0]&&e.t<r[1]}),s={earn:0,lost:0,spent:0,chores:0,top:"",wins:D.wins.filter(function(w){return w.kid===id&&w.t>=r[0]&&w.t<r[1]}).length},cnt={},m=0,w;
+es.forEach(function(e){if(e.p>0){s.earn+=e.p;if(e.c==="chore")s.chores++;cnt[e.w]=(cnt[e.w]||0)+1}else if(e.c==="reward")s.spent-=e.p;else s.lost-=e.p});
+for(w in cnt)if(cnt[w]>m){m=cnt[w];s.top=w}return s}
+function wcard(x,o){var s=wsum(x.id,o),msg=!s.earn&&!s.lost?"A quiet week 🌙":!s.lost?"A perfect week! 🌟":s.earn>=s.lost?"Great effort — keep it going! 💪":"A tricky week — tomorrow is a fresh start 🌈";
+return "<div class='card'><div class='nm'>"+esc(x.av)+" "+esc(x.name)+"</div><div class='row'><span class='pos'>+"+s.earn+" ⭐ earned</span><span class='neg'>−"+s.lost+" lost</span><span class='mut'>🎁 "+s.spent+" spent</span></div><div class='mut'>🧹 "+s.chores+" chores · 🏆 "+s.wins+" achievements"+(s.top?" · Most often: "+esc(s.top):"")+"</div><div style='margin-top:6px'><b>"+msg+"</b></div></div>"}
+function weeklyAll(){var h="<h2>📅 Weekly summary</h2><div class='tabs'>";[["This week",0],["Last week",1],["2 weeks ago",2],["3 weeks ago",3]].forEach(function(t){h+="<button class='"+(V.wk===t[1]?"on":"")+"' data-a='wk' data-v='"+t[1]+"'>"+t[0]+"</button>"});
+h+="</div><div class='mut'>Week of "+new Date(wkR(V.wk)[0]).toLocaleDateString(undefined,{month:"short",day:"numeric"})+"</div><div class='grid' style='margin-top:10px'>";D.kids.forEach(function(x){h+=wcard(x,V.wk)});return h+"</div>"+(D.kids.length?"":"<p class='mut'>Add a child to see their week.</p>")}
+function weeklyKid(k){return "<h2>📅 My week</h2>"+wcard(k,0)}
+setInterval(function(){if(!document.hidden)poll()},5000);
+api("GET","/api/me").then(start).catch(function(){render()});
+</script></body></html>
